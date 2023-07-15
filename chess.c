@@ -1,11 +1,18 @@
 #include "chess.h"
 
+void print_board(char table[][HEADER])
+{
+    for(int j = 0; j < BODY; j++)
+    {
+        for(int i = 0; i < HEADER; i++)
+            printf("%c", table[j][i]);
+        printf("\n");
+    }
+}
 void create_board(char table[][HEADER])
 {
        create_header(table);
        create_body(table);
-        
-    
 }
 
 void create_header(char table[BODY][HEADER])
