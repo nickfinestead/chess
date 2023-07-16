@@ -2,13 +2,15 @@
 
 
 #include <stdio.h>
+#include <string.h>
 // Defines the board length/height. 
 // This is the only supported board currently.
-#define HEADER 51
-#define BODY 26
+#define bool unsigned char
+#define HEADER 53 // 51/53
+#define BODY 26 // could change to 27 to have extra spacing at bottom
 
 
-
+// IMPLEMENTED FUNCTIONS
 void print_board(char table[][HEADER]);
 
 
@@ -17,11 +19,20 @@ void create_board(char table[][HEADER]); // indentation is shown to show helper 
     void create_header(char table[][HEADER]);
     void create_body(char table[][HEADER]);
 
+// Pieces can move
+// TODO: Implement checks, pieces being blocked
+// TODO: Implement castling
+// TODO: Implement Taking Pieces
+void move_piece(char table[][HEADER], char piece[3], bool turn); // going to validate user input and check if piece is on square.
 
 
+
+
+// FUTURE IMPLEMENTATIONS
 // TODO: add validation to see if piece can move
 // TODO: mark spaces that are currently free with an X to indicate possible square
 //          could make a new function to print the possible moves?
-// TODO: check if right user is choosing right pieces
-void move_piece(char table[][HEADER], char piece[3]); // going to validate user input and check if piece is on square.
-void print_moves(char table[][HEADER], char piece[3]); // kind of tricky, not sure ab implementation yet
+// TODO: Implement a game log to output file? could be cool
+
+
+//void print_moves(char table[][HEADER], char piece[3]); // kind of tricky, not sure ab implementation yet. may not implement bc im lazy

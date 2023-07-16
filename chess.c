@@ -51,13 +51,49 @@ void create_body(char table[BODY][HEADER])
                 else if(j/3 == 2 || j/3 == 7)
                     table[j][i] = 'P';
                 if(j/3 >= 1 && j/3 <= 2)
-                    table[j][i-1] = 'w';
-                else if(j/3 >=7 && j/3 <= 8)
                     table[j][i-1] = 'b';
+                else if(j/3 >=7 && j/3 <= 8)
+                    table[j][i-1] = 'w';
             }
             else
                 table[j][i] = ' ';
         }
         
     }
+}
+
+void move_piece(char table[][HEADER], char piece[3], bool turn)
+{
+    char move[3] = {};
+
+    // while(strlen(piece) != 2 || piece[0] < 'A' || piece[0] > 'H' || piece[1] < '1' || piece[1] > '8')
+    // {
+    //     printf("ERROR: Invalid Piece\nPlease reenter your piece: ");
+    //     scanf(" %s",piece);
+    // }
+    int pos = ((piece[0] - 65) * 6) + 5; // mult by 6, offset of 5 for first letter
+    int col = ((piece[1] - 48) * 3); // mult by 3
+
+    // while(table[col][pos] == ' ')
+    // {
+    //     printf("ERROR: No piece is at that location\nPlease reenter your piece: ")
+    //     scanf(" %s",piece)
+    // }
+    // while(table[col][pos-1] == 'b' && turn == 0 || table[col][pos-1] == 'w' && turn == 1 )
+    // {
+    //     printf("ERROR: That is the wrong color's turn to move\nPlease reenter your piece: ");
+    //     scanf(" %s", piece);
+    // }
+
+    printf("Please enter the space you want to move to: ");
+    scanf(" %s", move);
+    int pos_tomove = ((move[0] - 65) * 6) + 5; // mult by 6, offset of 5 for first letter
+    int col_tomove = ((move[1] - 48) * 3); // mult by 3
+
+    table[col_tomove][pos_tomove-1] = table[col][pos-1];
+    table[col_tomove][pos_tomove] = table[col][pos];
+    table[col][pos-1] = ' ';
+    table[col][pos] = ' ';
+
+    
 }
