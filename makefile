@@ -3,7 +3,7 @@ CFLAGS=-I.
 
 all: main
 
-main: main.c chess.c
+main: main.c  moves.c chess.c
 	${CC} -o chess $^
 
 clean: 

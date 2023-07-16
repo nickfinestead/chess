@@ -35,4 +35,5 @@ void move_piece(char table[][HEADER], char piece[3], bool turn); // going to val
 // TODO: Implement a game log to output file? could be cool
 
 
-//void print_moves(char table[][HEADER], char piece[3]); // kind of tricky, not sure ab implementation yet. may not implement bc im lazy
+//void print_moves(char table[][HEADER]); // kind of tricky, not sure ab implementation yet. may not implement bc im lazy
+// TODO: could use some ds or array to hold the possible amount of moves, temporarily modify array, then set it back

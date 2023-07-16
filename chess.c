@@ -1,4 +1,5 @@
 #include "chess.h"
+#include "moves.h"
 
 void print_board(char table[][HEADER])
 {
@@ -90,7 +91,29 @@ void move_piece(char table[][HEADER], char piece[3], bool turn)
     int pos_tomove = ((move[0] - 65) * 6) + 5; // mult by 6, offset of 5 for first letter
     int col_tomove = ((move[1] - 48) * 3); // mult by 3
 
-    table[col_tomove][pos_tomove-1] = table[col][pos-1];
+    if(!isFree(table, col_tomove, pos_tomove))
+    {
+        // TODO: Reprompt
+    }
+
+    char piece_name = table[col][pos];
+
+    switch(piece_name) // will execute validation/actual move
+    {
+        case('P'):
+            break;
+        case('R'):
+            break;
+        case('H'):
+            break;
+        case('B'):
+            break;
+        case('Q'):
+            break;
+        case('K'):
+            break;
+    }
+    table[col_tomove][pos_tomove-1] = table[col][pos-1]; // lets user move whereever they want, simple swap
     table[col_tomove][pos_tomove] = table[col][pos];
     table[col][pos-1] = ' ';
     table[col][pos] = ' ';
