@@ -1,6 +1,22 @@
 #include "chess.h"
 #include "moves.h"
 
+
+// Actually Calculates column
+// TODO: Fix that
+// Array is possibly allocated backwards?
+int position(char a)
+{
+    return ((a - 65) * 6) + 5;
+}
+
+// Actually calculates position in row
+// TODO: Fix that
+int column(char a)
+{
+    return ((a - 48) * 3);
+}
+
 void print_board(wchar_t table[][HEADER])
 {
 
@@ -13,7 +29,6 @@ void print_board(wchar_t table[][HEADER])
     for(int j = 0; j < BODY; j++)
     {
         for(int i = 0; i < HEADER; i++)
-
             printf("%lc", table[j][i]);
         printf("\n");
     }
@@ -21,23 +36,23 @@ void print_board(wchar_t table[][HEADER])
 }
 void create_board(wchar_t table[][HEADER])
 {
-       create_header(table);
-       create_body(table);
+    create_header(table);
+    create_body(table);
 }
 
 void create_header(wchar_t table[BODY][HEADER])
 {
      // This loop creates the header
-        for(int i = 0; i < HEADER; i++)
-        {
-            
-            if((i + 1) % 3 == 0 && (i+1) % 6 != 0)
-                table[0][i] = '|';
-            else if((i+1) % 6 == 0)
-                table[0][i] = (i/6) + 65;
-            else
-                table[0][i] = ' ';
-        }
+    for(int i = 0; i < HEADER; i++)
+    {
+        
+        if((i + 1) % 3 == 0 && (i+1) % 6 != 0)
+            table[0][i] = '|';
+        else if((i+1) % 6 == 0)
+            table[0][i] = (i/6) + 65;
+        else
+            table[0][i] = ' ';
+    }
 }
 
 wchar_t get_code(char side, char piece)
@@ -64,11 +79,7 @@ wchar_t get_code(char side, char piece)
 
 void create_body(wchar_t table[BODY][HEADER])
 {
-    // TODO: 
-    /*
-        Refactor function to use hex unicode values for Chess Pieces
-
-    */
+    
     char row[] = {'R' ,'H' ,'B' ,'K' ,'Q' , 'B', 'H', 'R'};
     
     for(int j = 1; j < BODY; j++)
@@ -86,7 +97,7 @@ void create_body(wchar_t table[BODY][HEADER])
                 if(j/3 == 1 || j/3 == 8)
                     table[j][i] = row[i/6];
                 else if(j/3 == 2 || j/3 == 7)
-                    table[j][i] = 'P';      // Handles Writing for Pawn
+                    table[j][i] = 'P';
                 if(j/3 >= 1 && j/3 <= 2)
                     table[j][i-1] = 'b';     
                 else if(j/3 >=7 && j/3 <= 8)
@@ -114,60 +125,91 @@ void create_body(wchar_t table[BODY][HEADER])
     }
 }
 
-void move_piece(wchar_t table[][HEADER], char piece[3], bool turn)
+void move_piece(wchar_t table[][HEADER],bool turn)
 {
+    char piece[3] = {};
     char move[3] = {};
+    rePrompt:
+        
+        printf("\n\n%s Please enter the position of the piece you would like to move: ", (turn == 0) ? "White" : "Black" );
+        scanf(" %s", piece);
+        
 
-    // while(strlen(piece) != 2 || piece[0] < 'A' || piece[0] > 'H' || piece[1] < '1' || piece[1] > '8')
-    // {
-    //     printf("ERROR: Invalid Piece\nPlease reenter your piece: ");
-    //     scanf(" %s",piece);
-    // }
-    int pos = ((piece[0] - 65) * 6) + 5; // mult by 6, offset of 5 for first letter
-    int col = ((piece[1] - 48) * 3); // mult by 3
+        // while(strlen(piece) != 2 || piece[0] < 'A' || piece[0] > 'H' || piece[1] < '1' || piece[1] > '8')
+        // {
+        //     printf("ERROR: Invalid Piece\nPlease reenter your piece: ");
+        //     scanf(" %s",piece);
+        // }
+        int pos = position(piece[0]); // mult by 6, offset of 5 for first letter
+        int col = column(piece[1]); // mult by 3
 
-    // while(table[col][pos] == ' ')
-    // {
-    //     printf("ERROR: No piece is at that location\nPlease reenter your piece: ")
-    //     scanf(" %s",piece)
-    // }
-    // while(table[col][pos-1] == 'b' && turn == 0 || table[col][pos-1] == 'w' && turn == 1 )
-    // {
-    //     printf("ERROR: That is the wrong color's turn to move\nPlease reenter your piece: ");
-    //     scanf(" %s", piece);
-    // }
+        while(isFree(table, col, pos)) // Check to see if a piece is there
+        {
+            printf("ERROR: No piece is at that location\nPlease reenter the location of your piece: ");
+            scanf(" %s",piece);
+            pos = position(piece[0]); // mult by 6, offset of 5 for first letter
+            col = column(piece[1]); // mult by 3
 
-    printf("Please enter the space you want to move to: ");
-    scanf(" %s", move);
-    int pos_tomove = ((move[0] - 65) * 6) + 5; // mult by 6, offset of 5 for first letter
-    int col_tomove = ((move[1] - 48) * 3); // mult by 3
+        }
+        while(table[col][pos] < 0x265A && turn == 0 || table[col][pos] > 0x265A && turn == 1) // Check to see if it is the correct color
+        {
+            printf("ERROR: That is the wrong color's turn to move\nPlease reenter the location of your piece: ");
+            scanf(" %s", piece);
+            pos = position(piece[0]); // mult by 6, offset of 5 for first letter
+            col = column(piece[1]); // mult by 3
+        }
+        
 
-    if(!isFree(table, col_tomove, pos_tomove))
-    {
-        // TODO: Reprompt
-    }
 
-    char piece_name = table[col][pos];
-
-    switch(piece_name) // will execute validation/actual move
-    {
-        case('P'):
-            break;
-        case('R'):
-            break;
-        case('H'):
-            break;
-        case('B'):
-            break;
-        case('Q'):
-            break;
-        case('K'):
-            break;
-    }
-    table[col_tomove][pos_tomove-1] = table[col][pos-1]; // lets user move whereever they want, simple swap
-    table[col_tomove][pos_tomove] = table[col][pos];
-    table[col][pos-1] = ' ';
-    table[col][pos] = ' ';
+        printf("Please enter the space you want to move to: ");
+        
+        scanf(" %s", move);
+        int pos_tomove = position(move[0]); // mult by 6, offset of 5 for first letter
+        int col_tomove = column(move[1]); // mult by 3
+        while(pos_tomove == pos && col_tomove == col)
+        {
+            printf("ERROR: Please re-enter the position to move to: ");
+            scanf(" %s", move);
+            pos_tomove = position(move[0]); // mult by 6, offset of 5 for first letter
+            col_tomove = column(move[1]); // mult by 3
+        }
+    
 
     
+    // TODO: Refactor to work with unicode
+    wchar_t piece_val = 0;
+    
+    piece_val = (table[col][pos]%0x2654)%6;
+    printf("piece_val:%d\n", piece_val);
+    //printf("piece value %d\n",piece_val);
+
+    bool result = false;
+    switch(piece_val) // will execute validation/actual move
+    {
+        case(5): // Pawn
+            result = pawn_move(table, piece, move);
+            break;
+        case(4): // Knight
+            break;
+        case(3): // Bishop
+            break;
+        case(2): // Rook
+            break;
+        case(1): // Queen
+            break;
+        case(0): // King
+            break;
+    }
+
+    if(result)
+    {
+        table[col_tomove][pos_tomove] = table[col][pos];
+        table[col][pos] = ' ';
+
+    }
+    else
+    {
+        printf("ERROR: INVALID MOVE");
+        goto rePrompt;
+    }
 }
