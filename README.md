@@ -10,7 +10,6 @@ Last Update 5/24/2024
 
 
 Current Bugs
-- Pieces dissapear when moving to own square
 - Pieces have no restriction on moves
 - Infinite games
 
