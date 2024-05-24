@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include "chess.h"
+#include <locale.h>
+#include <stdlib.h>
 
 
 int main()
 {
+    setlocale(LC_CTYPE, "");
+    //wchar_t star = 0x265A;    
+    //printf("%lc\n", star);
     int turn_count = 0; // even is white's turn, odd is black
     char piece[3] = {};
-    char table[BODY][HEADER] = {};
+    wchar_t table[BODY][HEADER] = {};
     create_board(table);
 
     while ( 1 )

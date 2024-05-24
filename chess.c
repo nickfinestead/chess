@@ -1,22 +1,31 @@
 #include "chess.h"
 #include "moves.h"
 
-void print_board(char table[][HEADER])
+void print_board(wchar_t table[][HEADER])
 {
+
+    // TODO:
+    /*
+        - Add logic to output board from other perspective using for loop as below with if condition
+      for(int j = BODY-1; j >= 0; j--)
+        - Possible problem with how whitespace is outputting?
+    */
     for(int j = 0; j < BODY; j++)
     {
         for(int i = 0; i < HEADER; i++)
-            printf("%c", table[j][i]);
+
+            printf("%lc", table[j][i]);
         printf("\n");
     }
+
 }
-void create_board(char table[][HEADER])
+void create_board(wchar_t table[][HEADER])
 {
        create_header(table);
        create_body(table);
 }
 
-void create_header(char table[BODY][HEADER])
+void create_header(wchar_t table[BODY][HEADER])
 {
      // This loop creates the header
         for(int i = 0; i < HEADER; i++)
@@ -31,8 +40,35 @@ void create_header(char table[BODY][HEADER])
         }
 }
 
-void create_body(char table[BODY][HEADER])
+wchar_t get_code(char side, char piece)
 {
+    wchar_t value = 0x2654; // Since terminal coloring is inverted W == B and B == W
+    if(side == 'w')
+        value+=6;
+
+    switch(piece)
+    {
+        case('P'):
+            value++;
+        case('H'):
+            value++;
+        case('B'):
+            value++;
+        case('R'):
+            value++;
+        case('Q'):
+            value++;
+    }
+    return value;
+}
+
+void create_body(wchar_t table[BODY][HEADER])
+{
+    // TODO: 
+    /*
+        Refactor function to use hex unicode values for Chess Pieces
+
+    */
     char row[] = {'R' ,'H' ,'B' ,'K' ,'Q' , 'B', 'H', 'R'};
     
     for(int j = 1; j < BODY; j++)
@@ -50,9 +86,9 @@ void create_body(char table[BODY][HEADER])
                 if(j/3 == 1 || j/3 == 8)
                     table[j][i] = row[i/6];
                 else if(j/3 == 2 || j/3 == 7)
-                    table[j][i] = 'P';
+                    table[j][i] = 'P';      // Handles Writing for Pawn
                 if(j/3 >= 1 && j/3 <= 2)
-                    table[j][i-1] = 'b';
+                    table[j][i-1] = 'b';     
                 else if(j/3 >=7 && j/3 <= 8)
                     table[j][i-1] = 'w';
             }
@@ -61,9 +97,24 @@ void create_body(char table[BODY][HEADER])
         }
         
     }
+
+    for(int j = 0; j < HEADER ; j++)
+    {   
+        
+        for(int i = 0; i < HEADER; i++)
+        {
+            if(table[j][i] == 'b' || table[j][i] == 'w')
+            {
+                //printf("%lc%lc ", table[j][i], table[j][i+1]); // check [4][21]
+                 table[j][i+1] = get_code(table[j][i], table[j][i+1]);
+                 table[j][i] =  ' ';
+            }
+        }
+        printf("\n");
+    }
 }
 
-void move_piece(char table[][HEADER], char piece[3], bool turn)
+void move_piece(wchar_t table[][HEADER], char piece[3], bool turn)
 {
     char move[3] = {};
 

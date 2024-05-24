@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
+#include <stddef.h>
+#include <stdlib.h>
 // Defines the board length/height. 
 // This is the only supported board currently.
 #define bool unsigned char
@@ -11,19 +14,19 @@
 
 
 // IMPLEMENTED FUNCTIONS
-void print_board(char table[][HEADER]);
+void print_board(wchar_t table[][HEADER]);
 
 
 
-void create_board(char table[][HEADER]); // indentation is shown to show helper functions
-    void create_header(char table[][HEADER]);
-    void create_body(char table[][HEADER]);
-
+void create_board(wchar_t table[][HEADER]); // indentation is shown to show helper functions
+    void create_header(wchar_t table[][HEADER]);
+    void create_body(wchar_t table[][HEADER]);
+    wchar_t get_code(char side, char piece);
 // Pieces can move
 // TODO: Implement checks, pieces being blocked
 // TODO: Implement castling
 // TODO: Implement Taking Pieces
-void move_piece(char table[][HEADER], char piece[3], bool turn); // going to validate user input and check if piece is on square.
+void move_piece(wchar_t table[][HEADER], char piece[3], bool turn); // going to validate user input and check if piece is on square.
 
 
 
@@ -35,5 +38,5 @@ void move_piece(char table[][HEADER], char piece[3], bool turn); // going to val
 // TODO: Implement a game log to output file? could be cool
 
 
-//void print_moves(char table[][HEADER]); // kind of tricky, not sure ab implementation yet. may not implement bc im lazy
+//void print_moves(wchar_t table[][HEADER]); // kind of tricky, not sure ab implementation yet. may not implement bc im lazy
 // TODO: could use some ds or array to hold the possible amount of moves, temporarily modify array, then set it back
