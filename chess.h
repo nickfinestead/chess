@@ -15,6 +15,9 @@
 #define false 0
 #define true 1
 
+extern bool POSSIBLE_ENPASSANT;
+extern char ENPASSANT_LOC[3]; 
+
 
 // IMPLEMENTED FUNCTIONS
 void print_board(wchar_t table[][HEADER]);
@@ -46,3 +49,5 @@ void move_piece(wchar_t table[][HEADER], bool turn); // going to validate user i
 
 //void print_moves(wchar_t table[][HEADER]); // kind of tricky, not sure ab implementation yet. may not implement bc im lazy
 // TODO: could use some ds or array to hold the possible amount of moves, temporarily modify array, then set it back
+
+// TODO: Add a output file denoting the moves of the game in a certain format, possibly for evalutation?

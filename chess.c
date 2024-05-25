@@ -1,7 +1,7 @@
 #include "chess.h"
 #include "moves.h"
 
-
+bool POSSIBLE_ENPASSANT = 0;
 // Actually Calculates column
 // TODO: Fix that
 // Array is possibly allocated backwards?
@@ -187,7 +187,7 @@ void move_piece(wchar_t table[][HEADER],bool turn)
     switch(piece_val) // will execute validation/actual move
     {
         case(5): // Pawn
-            result = pawn_move(table, piece, move);
+            result = pawn_move(table, piece, move, turn != 0);
             break;
         case(4): // Knight
             break;

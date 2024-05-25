@@ -1,5 +1,6 @@
 #include "moves.h"
 
+
 // TODO: Add blocks for pieces in the way
         //  maybe add validation to see if a piece can move?
 
@@ -9,37 +10,57 @@ bool isFree(wchar_t a[][HEADER], int col, int pos)
 }
 
 // TODO: Fix column() and position() functions
-bool pawn_move(wchar_t table[][HEADER], char location[3], char destination[3])
+// TODO: Do more testing for edge cases, seems to have basic functionality so far
+// Color is 0 for white, 1 for black
+bool pawn_move(wchar_t table[][HEADER], char location[3], char destination[3], bool color )
 {
-    if(location[1] == '7'  && destination[1] < '7' && table[column(location[1])][position(location[0])] > 0x265A)
+    if(location[1] > '1' && color == 0 ) // Diagonal Capture for White Pawn
     {
-        if(location[1]-destination[1] <= 2)
-            return true; // indicating valid move for white pawn
-        // TODO: Add possible Diagonal take.
-        // TODO: Add En Passant
-        else
-           return false;
+        if(location[0] - 1 >= 'A' && destination[0] == location[0] - 1 && table[column(destination[1])][position(destination[0])] < WKING)
+            return true;
+        if(location[0] - 1 <= 'H' && destination[0] == location[0] + 1 && table[column(destination[1])][position(destination[0])] < WKING)
+            return true;
+        // TODO: Will add White en passant here.
     }
-    if(location[1] == '2'  && destination[1] > '2' && table[column(location[1])][position(location[0])] < 0x265A)
+    if(location[1] < '8' && color == 1 ) // Diagonal Capture for Black Pawn
     {
-        printf("loololol\n");
-        if(destination[1] - location[1] <= 2)
-            return true; // indicating valid move for black pawn
-        // TODO: Add possible Diagonal take.
-        // TODO: Add En Passant
-        else
-           return false;
+        if(location[0] - 1 >= 'A' && destination[0] == location[0] - 1 && table[column(destination[1])][position(destination[0])] > WKING)
+            return true;
+        if(location[0] - 1 <= 'H' && destination[0] == location[0] + 1 && table[column(destination[1])][position(destination[0])] > WKING)
+            return true;
+        // TODO: Will add Black en passant here.
+    }
+    if(destination[1] < '7' && location[0] == destination[0] &&  color == 0) // White Pawn Normal Moves
+    {
+        if(location[1] - destination[1] < 2)
+            return isFree(table, column(location[1]-1), position(location[0]));
+        else if(location[1] == '7' && location[1] - destination[1] == 2)
+            return isFree(table, column(location[1]-2), position(location[0])) && isFree(table, column(location[1]-1), position(location[0]));
+    }
+    if( destination[1] > '2' && location[0] == destination[0] && color == 1) // Black Pawn Normal Moves
+    {
+        if(destination[1] - location[1] < 2)
+            return isFree(table, column(location[1]+1), position(location[0]));
+        else if(location[1] == '2' && destination[1] - location[1] == 2)
+            return isFree(table, column(location[1]+2), position(location[0])) && isFree(table, column(location[1]+1), position(location[0]));
+
     }
 
-    // TODO: Add move two at beginning
-    // TODO: Add directional move based on color
-    // TODO: Add check if peice is blocked
-    // TODO: Add diagonal capture
+
+    // TODO: Test Promotion
+    if (color == 0 && destination[1] == '1' && location[1] - destination[1] < 2 && isFree(table, column(destination[1]), position(destination[0]))) // Promotion Logic WP
+        table[column(destination[1])][position(destination[0])] = get_code('w','Q'); // Colors are inverted I think, further testing required
+    if (color == 1 && destination[1] == '8' && destination[1]-location[1] < 2 && isFree(table, column(destination[1]), position(destination[0]))) // Promotion Logic BP
+        table[column(destination[1])][position(destination[0])] = get_code('b','Q'); // Colors are inverted I think, further testing required
+    
+
+    // Done: Add move two at beginning
+    // Done: Add directional move based on color
+    // Done: Add check if peice is blocked
+    // Done: Add diagonal capture
     // TODO: Add En Passant
-    // TODO: Add Promotion?
-    // TODO: Decide how to do reprompt
-    //      Possibly create function for whole prompt 
-    printf("test1\n");
+    // Testing: Add Promotion?
+    // Done: Decide how to do reprompt
     return false;
 }
 
