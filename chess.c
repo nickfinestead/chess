@@ -12,9 +12,14 @@ int position(char a)
 
 // Actually calculates position in row
 // TODO: Fix that
+// DONE: Fix formula to correctly calulate row number
+// IN PROGRESS: Needs more testing
 int column(char a)
 {
-    return ((a - 48) * 3);
+    //if(a < '5')
+    return (((9-(a - 48))) * 3);
+    // Original return statement below
+    //return (((a) - 48) * 3);
 }
 
 void print_board(wchar_t table[][HEADER])
@@ -91,7 +96,7 @@ void create_body(wchar_t table[BODY][HEADER])
             else if((j-1) % 3 == 0)
                 table[j][i] =  '_';
             else if(j % 3 == 0 && i == 0)
-                table[j][i] = 48 + j/3;
+                table[j][i] = 57 - j/3;
             else if(j % 3 == 0 && (i+1) % 6 == 0 && ( j/3 <= 2 || j/3 >= 7))
             {
                 if(j/3 == 1 || j/3 == 8)
@@ -127,6 +132,9 @@ void create_body(wchar_t table[BODY][HEADER])
 
 void move_piece(wchar_t table[][HEADER],bool turn)
 {
+    //int test[8][1] = {65,66,67,68,69,0};
+
+    //printf("\n\n\'%ls\'\n\n", *test);
     char piece[3] = {};
     char move[3] = {};
     rePrompt:
@@ -179,8 +187,8 @@ void move_piece(wchar_t table[][HEADER],bool turn)
     // TODO: Refactor to work with unicode
     wchar_t piece_val = 0;
     
-    piece_val = (table[col][pos]%0x2654)%6;
-    printf("piece_val:%d\n", piece_val);
+    piece_val = (table[col][pos]%0x2654)%6; // 0x2654 is value for a king, 6 different values for chess peices as shown in switch below.
+    //printf("piece_val:%d\n", piece_val);
     //printf("piece value %d\n",piece_val);
 
     bool result = false;

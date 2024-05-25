@@ -8,7 +8,7 @@ int main()
 {
     setlocale(LC_CTYPE, "");
     int turn_count = 0; // even is white's turn, odd is black
-    wchar_t table[BODY][HEADER] = {};
+    wchar_t table[BODY][HEADER] = {65};
     create_board(table);
 
     while ( 1 )
