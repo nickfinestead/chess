@@ -21,7 +21,7 @@ extern char ENPASSANT_LOC[3];
 
 
 // IMPLEMENTED FUNCTIONS
-void print_board(wchar_t table[][HEADER]);
+void print_board(wchar_t table[][HEADER], bool color);
 
 int position(char a); // helper function to cleanup code
 

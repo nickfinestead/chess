@@ -25,12 +25,17 @@ This project started on 7/15/2023
   - By proxy, Added Queen logic
   - Added more input verification
 
+  5/26/2024
+  - Added King Logic
+  - Added some logic to print board from current player's perspective ( minor whitespace issues )
+
+
 
 Current Bugs
-- King unable to move
+- N/A
 
 Current Features
-- (Most) Pieces move
+- Pieces move
 - Captures
 
 Untested Features
@@ -43,6 +48,5 @@ Future Features/tasks, TBD
 - Castle'ing
 - Add letter input at bottom of the board
 - Add possible coloring to board
-- Print Board view, based on current player.
-- Refactor spaghetti code
+- Refactor spaghetti code (create_body function)
 - Possibly comment on functions IO in .c files

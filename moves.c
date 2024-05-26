@@ -293,8 +293,18 @@ bool queen_move(wchar_t table[][HEADER], char location[3],  char destination[3],
 
 bool king_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
-    // TODO: Add movement
-    // TODO: Implement Capture
+    int horizontalDistance = location[0] - destination[0];
+    int verticalDistance = location[1] - destination[1];
+    if(abs(horizontalDistance) > 1 || abs(verticalDistance) > 1)// Will need to change whenever castle is implemented
+        return false;
+
+    return (((color == 0 && table[column(destination[1])][position(destination[0])] < WKING) 
+                || 
+                 (color == 1 && (table[column(destination[1])][position(destination[0])] > WKING 
+                             && table[column(destination[1])][position(destination[0])] != ' ' 
+                             || isFree(table, column(destination[1]), position(destination[0])))))); // Need extra conditions for Black Knight, due to spaces causing weird conditions.
+    // DONE: Add movement
+    // DONE: Implement Capture
     // TODO: Possibly Implement Castle Algorithm
     // TODO: Implement Check algorithm and blocking algorithm
 }

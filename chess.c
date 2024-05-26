@@ -22,7 +22,7 @@ int column(char a)
     //return (((a) - 48) * 3);
 }
 
-void print_board(wchar_t table[][HEADER])
+void print_board(wchar_t table[][HEADER], bool color)
 {
 
     // TODO:
@@ -31,11 +31,23 @@ void print_board(wchar_t table[][HEADER])
       for(int j = BODY-1; j >= 0; j--)
         - Possible problem with how whitespace is outputting?
     */
-    for(int j = 0; j < BODY; j++)
+    if (color == 0)
     {
-        for(int i = 0; i < HEADER; i++)
-            printf("%lc", table[j][i]);
-        printf("\n");
+        for(int j = 0; j < BODY; j++)
+        {
+            for(int i = 0; i < HEADER; i++)
+                printf("%lc", table[j][i]);
+            printf("\n");
+        }
+    }
+    else
+    {
+        for(int j = BODY-1; j >= 0; j--)
+        {
+            for(int i = HEADER-1; i >= 0; i--)
+                printf("%lc", table[j][i]);
+            printf("\n");
+        }
     }
 
 }
@@ -212,6 +224,8 @@ void move_piece(wchar_t table[][HEADER],bool turn)
 
     if(result)
     {
+        // TODO: Implement check to see if king is in check and input print statement here indicating king is in check.
+
         table[col_tomove][pos_tomove] = table[col][pos];
         table[col][pos] = ' ';
 

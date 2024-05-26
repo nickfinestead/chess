@@ -14,7 +14,7 @@ int main()
     while ( 1 )
     {
         turn_count = turn_count % 2;
-        print_board(table);
+        print_board(table, turn_count != 0);
         // TODO: check for check
         move_piece(table, turn_count); 
         turn_count++; // Commented out occasionally to test move features for pieces other than pawns
