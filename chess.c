@@ -202,6 +202,7 @@ void move_piece(wchar_t table[][HEADER],bool turn)
         case(3): // Bishop
             break;
         case(2): // Rook
+            result = rook_move(table, piece, move, turn != 0);
             break;
         case(1): // Queen
             break;

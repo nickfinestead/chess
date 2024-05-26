@@ -79,40 +79,115 @@ bool pawn_move(wchar_t table[][HEADER], char location[3], char destination[3], b
     // Done: Add directional move based on color
     // Done: Add check if peice is blocked
     // Done: Add diagonal capture
-    // IN PROGRESS: Add En Passant
-    //          Considering adding global variable containing location of last double move to check if En passant is legal. 
+    // Done: Add En Passant
     // IN PROGRESS: Add Promotion?
     // Done: Decide how to do reprompt
     return false;
 }
 
-bool rook_move(wchar_t table[][HEADER], char location[3],  char destination[3])
+bool rook_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
-    // TODO: Add movement vertically
+    bool result = true;
+    if(location[0] == destination[0]) // Column movement
+    {
+        // 8 to 1
+        if(location[1] > destination[1])
+        {
+            for(int i = column(location[1])+3; i >= column(destination[1]); i+=3)
+            {
+                if(i >= column('1'))
+                    break;
+                if(!isFree(table, i, position(location[0])) && (((color == 0 && table[i][position(location[0])] > WKING) || (color == 1 && table[i][position(location[0])] < WKING && table[i][position(location[0])] != ' '))))
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        // 1 to 8
+        else if(location[1] < destination[1])
+        {
+            for(int i = column(location[1])-3; i >= column(destination[1]); i-=3)
+            {
+                // printf("i: %d pos:%d\n", i, position(location[0]));
+                // printf("At %d %d %lc\n", i, position(location[0]), table[i][position(location[0])]);
+                // printf("A1 = %d %d\n", column('1'), position('A'));
+                // printf("A2 = %d %d\n", column('2'), position('A'));
+                // printf("A3 = %d %d\n", column('3'), position('A'));
+                if(i <= column('8')) // how column function is designed '8' outputs the lowest number
+                    break;
+                if(!isFree(table, i, position(location[0])) && (((color == 0 && table[i][position(location[0])] > WKING) || (color == 1 && table[i][position(location[0])] < WKING && table[i][position(location[0])] != ' '))))
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        else
+            return false;
+    }
+    else if(location[1] == destination[1]) // Row movement
+    {
+        // H to A
+        printf("hi\n");
+        if(location[0] > destination[0])
+        {
+            for(int i = position(location[0])-6; i >= position(destination[0]); i-=6)
+            {
+                printf("i: %d\n", i);
+
+                if(i <= position('A'))
+                    break;
+                if(!isFree(table, column(location[1]), i) && (((color == 0 && table[column(location[1])][i] > WKING) || (color == 1 && table[column(location[1])][i] < WKING && table[column(location[1])][i] != ' '))))
+                {
+                    // printf("WARNING PIECE %lc is at %d %d\n", table[column(location[1])][i],column(location[1]), i);
+                    result = false;
+                    break;
+                }
+            }
+        }
+        // A to H
+        else if(location[0] < destination[0])
+        {
+            for(int i = position(location[0])+6; i <= position(destination[0]); i+=6)
+            {
+                // printf("i: %d\n", i);
+                if(i >= position('H'))
+                    break;
+                if(!isFree(table, column(location[1]), i) && (((color == 0 && table[column(location[1])][i] > WKING) || (color == 1 && table[column(location[1])][i] < WKING && table[column(location[1])][i] != ' '))))
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        else
+            return false;
+    }
+    return result;
+    // DONE: Add movement vertically
     //          Add support for checking if path is blocked
-    // TODO: Add capture vertically
-    // TODO: Add movement horizontally
+    // DONE: Add capture vertically
+    // DONE: Add movement horizontally
     //          Add support for checking if path is blocked
-    // TODO: Add capture horizontally
+    // DONE: Add capture horizontally
 }
 
-bool bishop_move(wchar_t table[][HEADER], char location[3],  char destination[3])
+bool bishop_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
     // Use current location and loop till isFree is false() or at the edge of the table?
     //     Could save possible moves in a DS, but also could just do comparison to destination
-    // Base Cases
-    // A1                       H1
     // 
     // TODO: Add movement diagonally
     // TODO: Add capture diagonally
 }
 
-bool horse_move(wchar_t table[][HEADER], char location[3],  char destination[3])
+bool horse_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
-    // TODO: Add movement in L shape,
+    // TODO: Add movement in L shape
 }
 
-bool queen_move(wchar_t table[][HEADER], char location[3],  char destination[3])
+bool queen_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
     // Likely use combo of bishop move and rook move for simplicity
     // TODO: Add all captures
@@ -121,7 +196,7 @@ bool queen_move(wchar_t table[][HEADER], char location[3],  char destination[3])
     // TODO: Add movement diagonally
 }
 
-bool king_move(wchar_t table[][HEADER], char location[3],  char destination[3])
+bool king_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
     // TODO: Add movement
     // TODO: Implement Capture

@@ -16,8 +16,8 @@ int main()
         turn_count = turn_count % 2;
         print_board(table);
         // TODO: check for check
-        move_piece(table, turn_count);
-        turn_count++;
+        move_piece(table, turn_count); 
+        turn_count++; // Commented out occasionally to test move features for pieces other than pawns
     }
     return 0;
 }

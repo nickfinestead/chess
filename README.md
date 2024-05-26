@@ -18,6 +18,7 @@ This project started on 7/15/2023
   - Slight logic error with pawn captures on H file which would likely cause undefined behavior
   - Consolidated conditions for pawn movement
   - Added En Passant Support
+  - Added Rook logic
 
 
 Current Bugs
