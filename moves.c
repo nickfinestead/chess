@@ -184,12 +184,26 @@ bool bishop_move(wchar_t table[][HEADER], char location[3],  char destination[3]
 
 bool horse_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
-    // TODO: Add movement in L shape
+    // DONE: Add movement in L shape
+    int verticalDistance =  abs(location[1] - destination[1]);
+    int horizontalDistance = abs(location[0] - destination[0]);
+
+    if((verticalDistance == 2 && horizontalDistance == 1) || (horizontalDistance == 2 && verticalDistance == 1))
+    {
+        // printf("%d %d %d\n", color == 1 , table[column(destination[1])][position(destination[0])] > WKING , table[column(destination[1])][position(destination[0])] != ' ');
+        return (((color == 0 && table[column(destination[1])][position(destination[0])] < WKING) 
+                || 
+                 (color == 1 && (table[column(destination[1])][position(destination[0])] > WKING 
+                             && table[column(destination[1])][position(destination[0])] != ' ' 
+                             || isFree(table, column(destination[1]), position(destination[0])))))); // Need extra conditions for Black Knight, due to spaces causing weird conditions.
+    }
+    return false;
 }
 
 bool queen_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
-    // Likely use combo of bishop move and rook move for simplicity
+    return rook_move(table, location, destination, color) || bishop_move(table, location, destination, color);
+    // DONE: Likely use combo of bishop move and rook move for simplicity
     // TODO: Add all captures
     // TODO: Add movement horizontally
     // TODO: Add movement vertically

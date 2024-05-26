@@ -6,10 +6,11 @@ This project started on 7/15/2023
   - Added unicode chess pieces, general unicode support
   - Reworked isFree function
   - Reworked other misc error checking
-  - Changed output of the board.
+  - Changed output of the board
   - Added logic to pawn movement function
   - Tested basic pawn movements
   - Added reprompt for illegal moves
+  - Added extra spacing for board
   
   5/25/2024
   - Fixed Output of Board
@@ -19,10 +20,11 @@ This project started on 7/15/2023
   - Consolidated conditions for pawn movement
   - Added En Passant Support
   - Added Rook logic
+  - Added Knight logic
 
 
 Current Bugs
-- Pieces other than pawns unable to move (Movement functions not implemented yet)
+- Pieces other than pawns, rooks, knights unable to move (Movement functions not implemented yet)
 
 Current Features
 - (Some) Pieces move

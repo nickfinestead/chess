@@ -138,16 +138,12 @@ void move_piece(wchar_t table[][HEADER],bool turn)
     char piece[3] = {};
     char move[3] = {};
     rePrompt:
-        
-        printf("\n\n%s Please enter the position of the piece you would like to move: ", (turn == 0) ? "White" : "Black" );
-        scanf(" %s", piece);
-        
+        do
+        {
+            printf("\n\n%s please enter the position of the piece you would like to move: ", (turn == 0) ? "White" : "Black" );
+            scanf(" %s", piece);
+        } while(strcmp(piece,"A1") < 0 || strcmp(piece, "H8") > 0);
 
-        // while(strlen(piece) != 2 || piece[0] < 'A' || piece[0] > 'H' || piece[1] < '1' || piece[1] > '8')
-        // {
-        //     printf("ERROR: Invalid Piece\nPlease reenter your piece: ");
-        //     scanf(" %s",piece);
-        // }
         int pos = position(piece[0]); // mult by 6, offset of 5 for first letter
         int col = column(piece[1]); // mult by 3
 
@@ -198,6 +194,7 @@ void move_piece(wchar_t table[][HEADER],bool turn)
             result = pawn_move(table, piece, move, turn != 0);
             break;
         case(4): // Knight
+            result = horse_move(table, piece, move, turn != 0);
             break;
         case(3): // Bishop
             break;
