@@ -197,13 +197,16 @@ void move_piece(wchar_t table[][HEADER],bool turn)
             result = horse_move(table, piece, move, turn != 0);
             break;
         case(3): // Bishop
+            result = bishop_move(table, piece, move, turn != 0);
             break;
         case(2): // Rook
             result = rook_move(table, piece, move, turn != 0);
             break;
         case(1): // Queen
+            result = queen_move(table, piece, move, turn != 0);
             break;
         case(0): // King
+            result = king_move(table, piece, move, turn != 0);
             break;
     }
 

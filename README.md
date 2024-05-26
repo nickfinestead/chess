@@ -21,23 +21,28 @@ This project started on 7/15/2023
   - Added En Passant Support
   - Added Rook logic
   - Added Knight logic
+  - Added Bishop logic
+  - By proxy, Added Queen logic
+  - Added more input verification
 
 
 Current Bugs
-- Pieces other than pawns, rooks, knights unable to move (Movement functions not implemented yet)
+- King unable to move
 
 Current Features
-- (Some) Pieces move
+- (Most) Pieces move
 - Captures
 
 Untested Features
 - Promotion
+- Most movement functions
 
-Future Features, TBD
+Future Features/tasks, TBD
 - Checking mechanism
 - Checkmate mechanism
 - Castle'ing
-- Input verification
 - Add letter input at bottom of the board
 - Add possible coloring to board
 - Print Board view, based on current player.
+- Refactor spaghetti code
+- Possibly comment on functions IO in .c files

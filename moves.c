@@ -175,11 +175,92 @@ bool rook_move(wchar_t table[][HEADER], char location[3],  char destination[3], 
 
 bool bishop_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
 {
-    // Use current location and loop till isFree is false() or at the edge of the table?
-    //     Could save possible moves in a DS, but also could just do comparison to destination
-    // 
-    // TODO: Add movement diagonally
-    // TODO: Add capture diagonally
+    bool result = true;
+    int verticalDistance = location[0] - destination[0]; // Determine which direction to loop in
+    int horizontalDistance = location[1] - destination[1]; // Determine which direction to loop in
+    // printf("%d %d\n", verticalDistance, horizontalDistance);
+    if (abs(verticalDistance) != abs(horizontalDistance)) // Bishop moves 1 up and 1 over each time
+        return false;
+
+    // printf("i: %d pos:%d\n", i, position(location[0]));
+    // printf("At %d %d %lc\n", i, position(location[0]), table[i][position(location[0])]);
+    // printf("col, pos\n");
+    // printf("C1 = %d %d\n", column('1'), position('C'));
+    // printf("B2 = %d %d\n", column('2'), position('B'));
+    // printf("A3 = %d %d\n", column('3'), position('A'));
+
+    if(verticalDistance > 0)
+    {
+        // Move in +y direction
+        if(horizontalDistance > 0)
+        {
+            // printf("TEST1\n");
+            // printf("%d %d\n", position(location[0])6< position(destination[0]),  column(location[1])+3 < column(destination[1]));
+            for(int i = position(location[0])-6,j = column(location[1])+3; i >= position(destination[0]), j < column(destination[1]); i-=6, j+=3 )
+            {
+                if(((color == 0 && table[column(destination[1])][position(destination[0])] > WKING) 
+                    || 
+                    (color == 1 && (table[column(destination[1])][position(destination[0])] < WKING  && table[column(destination[1])][position(destination[0])] != ' ' || isFree(table, column(destination[1]), position(destination[0]))))))
+                    {
+                        result = false;
+                        break;
+                    }
+            }
+        }
+        else
+        {
+            // printf("TEST2\n");
+            for(int i = position(location[0])+6,j = column(location[1])-3; i > position(destination[0]), j <= column(destination[1]); i+=6, j-=3 )
+            {
+                // printf("%d %d\n",j,i);
+                if(((color == 0 && table[column(destination[1])][position(destination[0])] > WKING) 
+                    || 
+                    (color == 1 && (table[column(destination[1])][position(destination[0])] < WKING  && table[column(destination[1])][position(destination[0])] != ' ' || isFree(table, column(destination[1]), position(destination[0]))))))
+                    {
+                        result = false;
+                        break;
+                    }
+            }
+        }
+    }
+    else // Since 0 case is handled in input stage
+    {
+        // Move in -y direction
+        if(horizontalDistance > 0)
+        {
+            //printf("TEST3\n");
+            //printf("%d %d\n", position(location[0]) + 6 < position(destination[0]),  column(location[1])-3 < column(destination[1]));
+            for(int i = position(location[0])+6,j = column(location[1])+3; i < position(destination[0]), j < column(destination[1]); i+=6, j+=3 )
+            {
+                // printf("%d %d\n",j,i);
+                if(((color == 0 && table[column(destination[1])][position(destination[0])] > WKING) 
+                    || 
+                    (color == 1 && (table[column(destination[1])][position(destination[0])] < WKING  && table[column(destination[1])][position(destination[0])] != ' ' || isFree(table, column(destination[1]), position(destination[0]))))))
+                    {
+                        result = false;
+                        break;
+                    }
+            }
+        }
+        else
+        {
+            // printf("TEST4\n");
+            for(int i = position(location[0])-6,j = column(location[1])-3; i <= position(destination[0]), j <= column(destination[1]); i-=6, j-=3 )
+            {
+                if(((color == 0 && table[column(destination[1])][position(destination[0])] > WKING) 
+                    || 
+                    (color == 1 && (table[column(destination[1])][position(destination[0])] < WKING  && table[column(destination[1])][position(destination[0])] != ' ' || isFree(table, column(destination[1]), position(destination[0]))))))
+                    {
+                        result = false;
+                        break;
+                    }
+            }
+        }
+    }
+
+    // DONE: Add movement diagonally
+    // DONE: Add capture diagonally
+    return result;
 }
 
 bool horse_move(wchar_t table[][HEADER], char location[3],  char destination[3], bool color)
