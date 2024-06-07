@@ -47,9 +47,9 @@ typedef struct
 }BOARD;
 
 
-PLAYER white;
-PLAYER black;
-BOARD board;
+extern PLAYER white;
+extern PLAYER black;
+extern BOARD board;
 
 // IMPLEMENTED FUNCTIONS
 void print_board();

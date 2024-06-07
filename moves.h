@@ -5,10 +5,6 @@
 #define WKING 0x265A
 
 
-extern PLAYER white;
-extern PLAYER black;
-extern BOARD board;
-
 void move_piece(bool current_move);
 
 bool pawn_move(char location[3], char destination[3]);

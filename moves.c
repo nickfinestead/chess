@@ -3,10 +3,6 @@
 #define h_delta	((destination[0] - 65) - (location[0] - 65))
 #define v_delta (((destination[1] - 65) - (location[1] - 65)))
 
-extern PLAYER white;
-extern PLAYER black;
-extern BOARD board;
-
 
 
 bool pawn_move(char location[3], char destination[3])
