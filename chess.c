@@ -1,23 +1,33 @@
 #include "chess.h"
 #include "moves.h"
+#define SPACE 3
+#define spacing {for(int i = 0; i < SPACE; printf(" "), i++);}
+
+#define COL(a) (72 - a)
+#define ROW(a) (56 - a)
 
 bool POSSIBLE_ENPASSANT = 0;
 char ENPASSANT_LOC[3];
 
+
+
+
 void print_board()
 {
-
-   for (int j = 0; j < 8; j++)
+	print_header();
+	for (int j = 0; j < 8; j++)
 	{
+		printf("%d ", 8 - j);
 		for (int i = 0; i < 8; i++)
-		{
+		{	
 			if(((i+1)+j)%2 == 0)
 				printf("\033[1;40m");
 			if (board.table[j][i])
-				printf("%lc",board.table[j][i]->value);
+				printf(" %lc ",board.table[j][i]->value);
 			else
-				printf(" ");
+				spacing;
 			printf("\e[m");
+			printf("|");
 		}
 		printf("\n");
 	}
@@ -25,16 +35,17 @@ void print_board()
 }
 void create_board()
 {
-    create_header();
+    //print_header();
     create_body();
 }
 
-void create_header()
+void print_header()
 {
-     // This loop creates the header
+     // This loop prints the header
+	spacing;
     for(int i = 0; i < 8; i++)
     {
-        printf("%c",i+65);
+        printf("%c   ",i+65);
     }
 	printf("\n");
 }

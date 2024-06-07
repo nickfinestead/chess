@@ -48,17 +48,15 @@ BOARD board;
 
 // IMPLEMENTED FUNCTIONS
 void print_board();
+void print_header();
 
-int position(char a); // helper function to cleanup code
-
-int column(char a); // helper function to cleanup code
 
 
 // IN PROGRESS: Fix numbering of chess board, and setup. *HIGH PRIORITY*
 //              DONE: Fixed Setup of Board
 //              TODO: Fix Movement function for PAWN
 void create_board(); // indentation is shown to show helper functions
-    void create_header();
+    
     void create_body();
     wchar_t get_code(char side, char piece); // gets unicode for a specific peice
 // Pieces can move

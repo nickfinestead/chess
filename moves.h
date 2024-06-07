@@ -8,5 +8,14 @@
 extern PLAYER white;
 extern PLAYER black;
 
+void move_piece(bool current_move);
+
+bool pawn_move();
+bool rook_move();
+bool knight_move();
+bool bishop_move();
+bool queen_move();
+bool king_move();
+
 
 #endif
