@@ -10,12 +10,16 @@
 // Defines the board length/height. 
 // This is the only supported board currently.
 // May add functionality to support different sizes later
-#define bool unsigned char
 #define HEADER 1
 #define BODY 1
 
-#define false 0
-#define true 1
+typedef enum
+{
+	false,
+	true
+}bool;
+
+
 
 extern bool POSSIBLE_ENPASSANT;
 extern char ENPASSANT_LOC[3]; 
@@ -26,6 +30,7 @@ typedef struct
 	char location[3];
 	char color;
 	wchar_t value;
+	bool (*move)(char[3],char[3]);
 }PIECE;
 	
 
@@ -63,7 +68,7 @@ void create_board(); // indentation is shown to show helper functions
 // TODO: Implement checks, pieces being blocked
 // TODO: Implement castling
 // TODO: Implement Taking Pieces
-//void move_piece(wchar_t table[][HEADER], bool turn); // going to validate user input and check if piece is on square.
+void move_piece(bool turn); // going to validate user input and check if piece is on square.
 
 
 

@@ -1,13 +1,13 @@
 #include "chess.h"
 #include "moves.h"
-#define SPACE 3
-#define spacing {for(int i = 0; i < SPACE; printf(" "), i++);}
+//#define SPACE 3
+//#define spacing (for(int i = 0; i < SPACE; printf(" "), i++);)
 
-#define COL(a) (72 - a)
-#define ROW(a) (56 - a)
+//#define COL(a) (72 - a)
+//#define ROW(b) (56 - b)
 
-bool POSSIBLE_ENPASSANT = 0;
-char ENPASSANT_LOC[3];
+//bool POSSIBLE_ENPASSANT;
+//char ENPASSANT_LOC[3];
 
 
 
@@ -25,7 +25,7 @@ void print_board()
 			if (board.table[j][i])
 				printf(" %lc ",board.table[j][i]->value);
 			else
-				spacing;
+				printf("   ");
 			printf("\e[m");
 			printf("|");
 		}
@@ -42,7 +42,7 @@ void create_board()
 void print_header()
 {
      // This loop prints the header
-	spacing;
+	printf("   ");
     for(int i = 0; i < 8; i++)
     {
         printf("%c   ",i+65);
@@ -82,6 +82,29 @@ PIECE create_piece(char *name, char loc[3], char color, wchar_t value)
 	temp_piece.color = color;
 	temp_piece.value = value;
 	
+	switch(name[0])
+	{
+		case 'P':
+			temp_piece.move = &pawn_move;
+			break;
+		case 'R':
+			temp_piece.move = &rook_move;
+			break;
+		case 'H':
+			temp_piece.move = &knight_move;
+			break;
+		case 'B':
+			temp_piece.move = &bishop_move;
+			break;
+		case 'Q':
+			temp_piece.move = &queen_move;
+			break;
+		case 'K':
+			temp_piece.move = &king_move;
+			break;
+		
+	}
+	
 	return temp_piece;
 }
 
@@ -94,9 +117,8 @@ void create_body()
 	// Black piece setup
 	for ( int j = 0; j < 2; j++)
 	{	
-		for ( int i = 0; i < 8; i++) // implement logic to insert into PLAYER black structure
+		for ( int i = 0; i < 8; i++)
 		{
-			//printf("%lc\t",get_code('b',row[i][0]));
 			char location[3];
 			location[0] = 65 + i; // column ex. A
 			location[1] = 56-j; // row ex. 8
@@ -112,9 +134,8 @@ void create_body()
 	
 	for ( int j = 0; j < 2; j++)
 	{	
-		for ( int i = 0; i < 8; i++) // implement logic to insert into PLAYER white structure
+		for ( int i = 0; i < 8; i++)
 		{
-			//printf("%lc\t",get_code('b',row[i][0]));
 			char location[3];
 			location[0] = 65 + i; // column ex. A
 			location[1] = 48 + j; // row ex. 1
@@ -126,27 +147,21 @@ void create_body()
 			board.table[7-j][i] = &white.pieces[i+(j*8)];
 		}
 	}
+}
+void move_piece(bool turn)
+{
+	char destination[3];
+	char location[3];
+	// TODO: Implement logic for inputting destination and location
 	
 	
-	/*for (int i = 0; i < 16; i++)
+	PIECE temp_piece = *(board.table[1][0]);
+	bool result = temp_piece.move(temp_piece.location, "A8");
+	if(result)
 	{
-		printf("%s %s %c %lc\n", black.pieces[i].name, black.pieces[i].location, black.pieces[i].color, black.pieces[i].value);
-		
-	}*/
-	
-	
-	/*printf("\n");
-	char color[] = {'b', 'w'};
-	for (int j = 0; j < 2; j++)
-	{
-		for ( int i = 0; i <8; i++)
-			printf("%lc\t", get_code(color[j], 'P'));
-		printf("\n");
+		// TODO: implement logic for handling captures
+		char c;
+		printf(":D\n");
+		scanf(" %c",&c);
 	}
-		
-	for ( int i = 0; i < 8; i++)
-		printf("%lc\t",get_code('w',row[i][0]));
-	
-	printf("\n");
-	*/
 }

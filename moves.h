@@ -10,12 +10,12 @@ extern PLAYER black;
 
 void move_piece(bool current_move);
 
-bool pawn_move();
-bool rook_move();
-bool knight_move();
-bool bishop_move();
-bool queen_move();
-bool king_move();
+bool pawn_move(char location[3], char destination[3]);
+bool rook_move(char location[3], char destination[3]);
+bool knight_move(char location[3], char destination[3]);
+bool bishop_move(char location[3], char destination[3]);
+bool queen_move(char location[3], char destination[3]);
+bool king_move(char location[3], char destination[3]);
 
 
 #endif
