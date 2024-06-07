@@ -4,8 +4,8 @@
 
 #define WKING 0x265A
 
-bool POSSIBLE_ENPASSANT;
-char ENPASSANT_LOC[3]; 
+extern bool POSSIBLE_ENPASSANT;
+extern char ENPASSANT_LOC[3]; 
 
 
 // bool checkDiagonals(wchar_t table[][HEADER], char destination[3]);
