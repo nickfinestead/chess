@@ -2,6 +2,7 @@
 #include "moves.h"
 
 bool POSSIBLE_ENPASSANT = 0;
+char ENPASSANT_LOC[3]; 
 // Actually Calculates column
 // TODO: Fix that
 // Array is possibly allocated backwards?
