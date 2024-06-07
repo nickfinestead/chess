@@ -9,7 +9,9 @@
 //bool POSSIBLE_ENPASSANT;
 //char ENPASSANT_LOC[3];
 
-
+extern PLAYER white;
+extern PLAYER black;
+extern BOARD board;
 
 
 void print_board()

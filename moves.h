@@ -7,6 +7,7 @@
 
 extern PLAYER white;
 extern PLAYER black;
+extern BOARD board;
 
 void move_piece(bool current_move);
 
