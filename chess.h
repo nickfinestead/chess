@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHESS_H
+#define CHESS_H
 
 
 #include <stdio.h>
@@ -55,4 +56,4 @@ void move_piece(wchar_t table[][HEADER], bool turn); // going to validate user i
 // TODO: could use some ds or array to hold the possible amount of moves, temporarily modify array, then set it back
 
 // TODO: Add a output file denoting the moves of the game in a certain format, possibly for evaluation?
-
+#endif
