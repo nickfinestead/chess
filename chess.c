@@ -1,7 +1,7 @@
 #include "chess.h"
 #include "moves.h"
 
-bool POSSIBLE_ENPASSANT = 0;
+extern bool POSSIBLE_ENPASSANT = 0;
 // Actually Calculates column
 // TODO: Fix that
 // Array is possibly allocated backwards?
