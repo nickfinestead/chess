@@ -7,11 +7,9 @@
 #include <locale.h>
 #include <stddef.h>
 #include <stdlib.h>
-// Defines the board length/height. 
-// This is the only supported board currently.
-// May add functionality to support different sizes later
-#define HEADER 1
-#define BODY 1
+
+#define column(a) (a - 65)
+#define row(a) (9-(a-47))
 
 typedef enum
 {
@@ -31,6 +29,7 @@ typedef struct
 	char color;
 	wchar_t value;
 	bool (*move)(char[3],char[3]);
+	bool hasMoved;
 }PIECE;
 	
 

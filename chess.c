@@ -83,6 +83,7 @@ PIECE create_piece(char *name, char loc[3], char color, wchar_t value)
 	strcpy(temp_piece.location, loc);
 	temp_piece.color = color;
 	temp_piece.value = value;
+	temp_piece.hasMoved = false;
 	
 	switch(name[0])
 	{
@@ -140,7 +141,7 @@ void create_body()
 		{
 			char location[3];
 			location[0] = 65 + i; // column ex. A
-			location[1] = 48 + j; // row ex. 1
+			location[1] = 49 + j; // row ex. 1
 			if (j == 0)
 				white.pieces[i] = create_piece(row[i], location, 'w', get_code('w',row[i][0]));
 			else
@@ -155,10 +156,12 @@ void move_piece(bool turn)
 	char destination[3];
 	char location[3];
 	// TODO: Implement logic for inputting destination and location
+	char l;
 	
-	
-	PIECE temp_piece = *(board.table[1][0]);
-	bool result = temp_piece.move(temp_piece.location, "A8");
+	PIECE temp_piece = *(board.table[7][1]);
+	///printf("%s\n%s", temp_piece.name, temp_piece.location);
+	bool result = temp_piece.move(temp_piece.location, "A3");
+	//scanf(" %c",&l);
 	if(result)
 	{
 		// TODO: implement logic for handling captures
