@@ -1,21 +1,43 @@
 #include "moves.h"
 
-#define h_delta	((destination[0] - 65) - (location[0] - 65))
-#define v_delta (((destination[1] - 48) - (location[1] - 48)))
+#define h_delta	(((destination[0] - 65) - ((PIECE*)(self))->location[0] - 65))
+#define v_delta (((destination[1] - 48) - (((PIECE*)(self))->location[1] - 48)))
 
 
-
-bool pawn_move(char location[3], char destination[3])
+// c is column
+// r is row
+bool isFree(char c, char r)
 {
-	// TODO: Implement two move at the start
-	// TODO: Implement regular move
+	return (board.table[row(r)][column(c)] == 0);
+}
+
+bool isOpponent(char c, char r, char color)
+{
+	if(isFree(c, r))
+		return false;
+	return (board.table[row(r)][column(c)]->color != color);
+}
+
+
+bool pawn_move(char destination[3], void *self)
+{
+	//printf("Delta total %d\th: %d\tv:%d\n",abs(h_delta) + abs(v_delta),abs(h_delta), abs(v_delta));
+	if(h_delta > 1)
+		return false;
+	if(v_delta > 2 || v_delta <= 0)
+		return false;
+	if(((((PIECE*)self)->hasMoved == false && v_delta == 2) || v_delta == 1) && isFree(destination[0],destination[1])) 
+		return true;
+	if(isOpponent(destination[0],destination[1], ((PIECE*)self)->color) && abs(h_delta) == 1 && abs(v_delta) == 1)
+		return true;
+	
+	
 	// TODO: Implement En Passant
-	// TODO: Implement capture logic
 }
 
 
 
-bool rook_move(char location[3], char destination[3])
+bool rook_move(char destination[3], void *self)
 {
 	// TODO: Implement horizontal movement
 	// TODO: Implement vertical movement
@@ -23,25 +45,26 @@ bool rook_move(char location[3], char destination[3])
 }
 
 
-bool knight_move(char location[3], char destination[3])
+bool knight_move(char destination[3], void *self)
 {
-	int dest_row = row(destination[1]);
-	int dest_col = column(destination[0]);
-	int curr_row = row(location[1]);
-	int curr_col = column(location[0]);
-	printf("hi\n");
-	printf("Delta total %d\th: %d\tv:%d\n",abs(h_delta) + abs(v_delta),abs(h_delta), abs(v_delta));
 	if(abs(h_delta) + abs(v_delta) != 3)
 		return false;
-	if(!board.table[dest_row][dest_col])
-		return true;
-	if(board.table[curr_row][curr_col]->color != board.table[dest_row][dest_col]->color)
+	if(isOpponent(destination[0],destination[1], ((PIECE*)self)->color) || isFree(destination[0],destination[1]))
 		return true;
 	return false;
 }
 
 
-bool bishop_move(char location[3], char destination[3])
+bool bishop_move(char destination[3], void *self)
+{
+
+	
+	
+}
+
+
+
+bool queen_move(char destination[3], void *self)
 {
 	
 	
@@ -49,16 +72,7 @@ bool bishop_move(char location[3], char destination[3])
 }
 
 
-
-bool queen_move(char location[3], char destination[3])
-{
-	
-	
-	
-}
-
-
-bool king_move(char location[3], char destination[3])
+bool king_move(char destination[3], void *self)
 {
 	
 	

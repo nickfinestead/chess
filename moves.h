@@ -7,12 +7,12 @@
 
 void move_piece(bool current_move);
 
-bool pawn_move(char location[3], char destination[3]);
-bool rook_move(char location[3], char destination[3]);
-bool knight_move(char location[3], char destination[3]);
-bool bishop_move(char location[3], char destination[3]);
-bool queen_move(char location[3], char destination[3]);
-bool king_move(char location[3], char destination[3]);
+bool pawn_move(char[3],void*);
+bool rook_move(char[3],void*);
+bool knight_move(char[3],void*);
+bool bishop_move(char[3],void*);
+bool queen_move(char[3],void*);
+bool king_move(char[3],void*);
 
 
 #endif

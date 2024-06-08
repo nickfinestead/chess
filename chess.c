@@ -151,22 +151,45 @@ void create_body()
 		}
 	}
 }
+
+char *handle_input(char *label, bool turn)
+{
+	char *input;
+	input = malloc(sizeof(char) * 3); // Two characters + null byte
+	char buffer[1024];
+	do
+	{
+		printf("Please enter the %s piece's %s: ", (turn == 0) ? "white" : "black", label);
+		scanf(" %s",buffer); 
+		
+		
+	}while( buffer[0] > 'H' || buffer[0] < 'A' || buffer[1] > '8' || buffer[1] < '1' || (board.table[row(buffer[1])][column(buffer[0])] == 0 && label != "destination"));
+	
+	strncpy(input,buffer,2);
+	input[2] = '\0';
+	
+	return input;
+}
+
 void move_piece(bool turn)
 {
-	char destination[3];
 	char location[3];
-	// TODO: Implement logic for inputting destination and location
-	char l;
+	strcpy(location,handle_input("location",turn));
+	char destination[3];
+	strcpy(destination,handle_input("destination",turn));
 	
-	PIECE temp_piece = *(board.table[7][1]);
-	///printf("%s\n%s", temp_piece.name, temp_piece.location);
-	bool result = temp_piece.move(temp_piece.location, "A3");
-	//scanf(" %c",&l);
+	int dest_row = row(destination[1]), dest_col= column(destination[0]), curr_row = row(location[1]), curr_col = column(location[0]);
+	
+	PIECE* temp_piece = (board.table[curr_row][curr_col]);
+	bool result = temp_piece->move(destination, temp_piece);
+
 	if(result)
 	{
-		// TODO: implement logic for handling captures
-		char c;
-		printf(":D\n");
-		scanf(" %c",&c);
+		// Implement checking algorithm, ensure that move doesn't put opposing king in check
+		board.table[dest_row][dest_col] = board.table[curr_row][curr_col];
+		board.table[curr_row][curr_col] = 0x0;
+		strcpy(temp_piece->location, destination);
+		if(!temp_piece->hasMoved)
+			temp_piece->hasMoved = true;
 	}
 }

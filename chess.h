@@ -28,7 +28,7 @@ typedef struct
 	char location[3];
 	char color;
 	wchar_t value;
-	bool (*move)(char[3],char[3]);
+	bool (*move)(char[3], void*);
 	bool hasMoved;
 }PIECE;
 	
