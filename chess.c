@@ -200,7 +200,7 @@ void move_piece(bool turn)
 
 	if(result)
 	{
-		// Implement checking algorithm, ensure that move doesn't put opposing king in check
+		// Implement checking algorithm, ensure that move doesn't put king in check
 		board.table[dest_row][dest_col] = board.table[curr_row][curr_col];
 		board.table[curr_row][curr_col] = 0x0;
 		strcpy(temp_piece->location, destination);
