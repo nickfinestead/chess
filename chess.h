@@ -22,13 +22,17 @@ typedef enum
 extern bool POSSIBLE_ENPASSANT;
 extern char ENPASSANT_LOC[3]; 
 
-typedef struct
+typedef struct piece PIECE;
+
+typedef struct piece
 {
 	char *name;
 	char location[3];
 	char color;
 	wchar_t value;
-	bool (*move)(char[3], void*);
+	bool (*move)(char[3], PIECE*);
+	int (*getRow)(PIECE*);
+	int (*getCol)(PIECE*);
 	bool hasMoved;
 }PIECE;
 	

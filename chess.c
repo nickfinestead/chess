@@ -6,6 +6,19 @@
 //#define COL(a) (72 - a)
 //#define ROW(b) (56 - b)
 
+//#define column(a) (a - 65)
+//#define row(a) (9-(a-47))
+
+int getColumn(PIECE *self)
+{
+	return column(self->location[0]);
+}
+
+int getRow(PIECE *self)
+{
+	return row(self->location[1]);
+}
+
 //bool POSSIBLE_ENPASSANT;
 //char ENPASSANT_LOC[3];
 
@@ -84,6 +97,8 @@ PIECE create_piece(char *name, char loc[3], char color, wchar_t value)
 	temp_piece.color = color;
 	temp_piece.value = value;
 	temp_piece.hasMoved = false;
+	temp_piece.getCol = &getColumn;
+	temp_piece.getRow = &getRow;
 	
 	switch(name[0])
 	{
@@ -191,5 +206,6 @@ void move_piece(bool turn)
 		strcpy(temp_piece->location, destination);
 		if(!temp_piece->hasMoved)
 			temp_piece->hasMoved = true;
+		printf("Debug: %s %s %d %d\n", temp_piece->name, temp_piece->location, temp_piece->getCol(temp_piece), temp_piece->getRow(temp_piece));
 	}
 }
